@@ -1,0 +1,26 @@
+# Identify tools that will allow you to do the following:
+
+## Scan infrastructure as code templates
+1. terrascan
+2. cfn_nag
+
+### Example vulnerability
+- IAM role should not allow * action on its permissions policy
+- Elastic Load Balancer V2 should have access logging enabled
+
+
+## Scan AMI’s or containers for OS vulnerabilities
+1. AWS Inspector
+2. Amazon ECR Image Scanning
+
+### Example vulnerability
+- Outdated Software Packages
+- Known Security Exploits (e.g., CVE)
+
+## Scan an AWS environment for cloud configuration vulnerabilities
+1. AWS Config
+2. AWS Security Hub
+
+### Example vulnerability
+- Security groups should not allow ingress from 0.0.0.0/0 or ::/0 to port 22
+- Security groups should not allow ingress from 0.0.0.0/0 or ::/0 to port 3389

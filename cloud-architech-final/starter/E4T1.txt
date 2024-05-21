@@ -1,0 +1,10 @@
+
+
+# Identify 2-3 changes that can be made to our environment to prevent an ssh brute force attack from the internet.
+1. Disable password authentication, use ssh key authentication instead
+2. Use a bastion host instead of allowing all instances
+
+# Neither instance should have had access to the secret recipes bucket, in the even that instance API credentials were compromised how could we have prevented access to sensitive data.
+
+1. We need to restrict IAM role permission, avoid granting broad access rights
+2. Encrypt sensitive data using KMS
