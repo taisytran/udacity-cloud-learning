@@ -1,0 +1,101 @@
+Description: CD12352 - Infrastructure as Code Project - Udagram
+
+Parameters:
+  ComponentID:
+    Description: ComponentID, used for tagging
+    Type: String
+
+Resources:
+  WebAppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP to client
+      VpcId: !ImportValue
+        'Fn::Sub': "${ComponentID}-VpcId"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  WebAppLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: ami-07caf09b362be10b8
+        InstanceType: t2.micro
+        KeyName: vockey
+        SecurityGroupIds:
+          - !Ref WebAppSecurityGroup
+        BlockDeviceMappings:
+          - DeviceName: /dev/sda1
+            Ebs:
+              VolumeSize: 10
+              VolumeType: gp3
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash
+            dnf update -y
+            dnf install nginx -y
+            systemctl start nginx
+            systemctl enable nginx
+            echo "<html><body><h1>it works! Udagram, Udacity</h1></body></html>" > /usr/share/nginx/html/index.html
+
+  WebAppAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateId: !Ref WebAppLaunchTemplate
+        Version: !GetAtt WebAppLaunchTemplate.LatestVersionNumber
+      MinSize: 1
+      MaxSize: 2
+      DesiredCapacity: 1
+      VPCZoneIdentifier:
+        - !ImportValue
+          'Fn::Sub': "${ComponentID}-PrivateSubnet1Id"
+        - !ImportValue
+          'Fn::Sub': "${ComponentID}-PrivateSubnet2Id"
+      TargetGroupARNs:
+        - !Ref WebAppTargetGroup
+      HealthCheckType: "EC2"
+      HealthCheckGracePeriod: 300
+      MetricsCollection:
+        - Granularity: "1Minute"
+      Tags:
+        - Key: "Name"
+          Value: "Udagram-ASG-Instance"
+          PropagateAtLaunch: true
+
+  WebAppTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      VpcId: !ImportValue
+        'Fn::Sub': "${ComponentID}-VpcId"
+
+  WebAppLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Subnets:
+        - !ImportValue
+          'Fn::Sub': "${ComponentID}-PublicSubnet1Id"
+        - !ImportValue
+          'Fn::Sub': "${ComponentID}-PublicSubnet2Id"
+      SecurityGroups:
+        - !Ref WebAppSecurityGroup
+
+  WebAppListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref WebAppTargetGroup
+      LoadBalancerArn: !Ref WebAppLoadBalancer
+      Port: 80
+      Protocol: HTTP
+
+Outputs:
+  LoadBalancerDNS:
+    Description: DNS Name of the Web App Load Balancer
+    Value: !GetAtt WebAppLoadBalancer.DNSName
