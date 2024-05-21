@@ -1,0 +1,10 @@
+Research and analyze which of the vulnerabilities appear to be related to the code that was deployed for the environment in this project.
+
+Bonus - provide recommendations on how to remediate the vulnerabilities.
+
+1. Enable MFA for user
+2. Security groups should restrict IP range ingress on port 22
+3. Enable Cloudtrail
+4. EC2 instances should not have a public IPv4 address
+5. Enable access logging for S3
+
