@@ -1,0 +1,23 @@
+﻿Estimate summary
+Upfront cost,Monthly cost,Total 12 months cost,Currency
+0,6264.550000000001,75174.60,USD
+,,* Includes upfront cost
+
+
+Detailed Estimate
+Group hierarchy,Region,Description,Service,Upfront,Monthly,First 12 months total,Currency,Status,Configuration summary
+Reduced_Cost_Estimate,US East (N. Virginia),,Amazon EC2 ,0,483.333,5800.00,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 1), Advance EC2 instance (m7g.8xlarge), Pricing strategy (Compute Savings Plans 3yr  No Upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
+Reduced_Cost_Estimate,US East (N. Virginia),,Amazon EC2 ,0,966.739,11600.87,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 1), Advance EC2 instance (m7g.metal), Pricing strategy (Compute Savings Plans 3yr  No Upfront), Enable monitoring (disabled), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
+Reduced_Cost_Estimate,US East (N. Virginia),,Amazon RDS for MySQL,0,1076.24,12914.88,USD,,"Storage for each RDS instance (General Purpose SSD (gp2)), Storage amount (20 GB), Quantity (1), Instance type (db.m7g.2xlarge), Utilization (On-Demand only) (100 %Utilized/Month), Deployment option (Multi-AZ), Pricing strategy (OnDemand)"
+Reduced_Cost_Estimate,US East (N. Virginia),,S3 Standard,0,1853.44,22241.28,USD,,S3 Standard storage (80 TB per month)
+Reduced_Cost_Estimate,US East (N. Virginia),,Data Transfer,0,0,0.00,USD,,
+Reduced_Cost_Estimate,US East (N. Virginia),,Amazon Route 53,0,399.25,4791.00,USD,,"Hosted Zones (1), Basic Checks Within AWS (300), Number of Elastic Network Interfaces (3)"
+Reduced_Cost_Estimate,US East (N. Virginia),,VPN Connection,0,0,0.00,USD,,"Working days per month (22), Number of Site-to-Site VPN Connections ()"
+Reduced_Cost_Estimate,US East (N. Virginia),,Network Address Translation (NAT) Gateway,0,401.49,4817.88,USD,,Number of NAT Gateways (1)
+Reduced_Cost_Estimate,US East (N. Virginia),,Application Load Balancer,0,542.03,6504.36,USD,,Number of Application Load Balancers (1)
+Reduced_Cost_Estimate,US East (N. Virginia),,Application Load Balancer,0,542.03,6504.36,USD,,Number of Application Load Balancers (1)
+
+
+
+Acknowledgement
+"* AWS Pricing Calculator provides only an estimate of your AWS fees and doesn't include any taxes that might apply. Your actual fees depend on a variety of factors, including your actual usage of AWS services."
